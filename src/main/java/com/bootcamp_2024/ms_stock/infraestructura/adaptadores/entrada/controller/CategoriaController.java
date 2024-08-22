@@ -2,22 +2,21 @@ package com.bootcamp_2024.ms_stock.infraestructura.adaptadores.entrada.controlle
 
 import com.bootcamp_2024.ms_stock.aplicacion.dto.CategoriaDTO;
 import com.bootcamp_2024.ms_stock.aplicacion.mapper.CategoriaDtoMapper;
-import com.bootcamp_2024.ms_stock.infraestructura.adaptadores.salida.mapper.CategoriaEntityMapper;
+import com.bootcamp_2024.ms_stock.dominio.paginacion.Orden;
+import com.bootcamp_2024.ms_stock.dominio.paginacion.Paginacion;
+import com.bootcamp_2024.ms_stock.dominio.paginacion.PaginacionImpl;
 import com.bootcamp_2024.ms_stock.aplicacion.service.CategoriaService;
 import com.bootcamp_2024.ms_stock.dominio.modelo.Categoria;
-import com.bootcamp_2024.ms_stock.infraestructura.adaptadores.salida.persistencia.repository.CategoriaJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping("/categorias")
 public class CategoriaController {
 
     @Autowired
-    private CategoriaJpaRepository categoriaJpaRepository;
     private final CategoriaService categoriaService;
     private final CategoriaDtoMapper categoriaMapper;
 
@@ -29,15 +28,13 @@ public class CategoriaController {
 
     @GetMapping("/listar")
     public List<CategoriaDTO> listarCategorias(
-            @RequestParam(value = "ascendente", defaultValue = "true") Boolean ascendente,
-            @RequestParam(value = "pagina", defaultValue = "0") Integer pagina,
-            @RequestParam(value = "tamanio", defaultValue = "10") Integer tamanio) {
+            @RequestParam(value = "sort", defaultValue = "true") Boolean ascendente,
+            @RequestParam(value = "page", defaultValue = "0") Integer pagina,
+            @RequestParam(value = "size", defaultValue = "10") Integer tamanio) {
 
-        List<Categoria> categorias = categoriaService.listarCategorias(ascendente, pagina, tamanio);
-
-        return categorias.stream()
-                .map(categoriaMapper::toDto)
-                .toList();
+        Paginacion paginacion = new PaginacionImpl(pagina, tamanio, ascendente ? Orden.ASCENDENTE : Orden.DESCENDENTE);
+        List<Categoria> categorias = categoriaService.listarCategorias(paginacion);
+        return categorias.stream().map(categoriaMapper::toDto).toList();
     }
 
 }

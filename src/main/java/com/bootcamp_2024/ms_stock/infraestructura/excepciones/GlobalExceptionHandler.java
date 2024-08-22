@@ -15,6 +15,4 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleCategoriaNotFoundException(CategoriaNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
-
-    // Agrega otros manejadores de excepciones según sea necesario
 }

@@ -1,17 +1,16 @@
 package com.bootcamp_2024.ms_stock.infraestructura.adaptadores.salida.persistencia.repository;
 
 import com.bootcamp_2024.ms_stock.dominio.modelo.Categoria;
+import com.bootcamp_2024.ms_stock.dominio.paginacion.Orden;
 import com.bootcamp_2024.ms_stock.dominio.repository.CategoriaRepository;
+import com.bootcamp_2024.ms_stock.dominio.paginacion.Paginacion;
 import com.bootcamp_2024.ms_stock.infraestructura.adaptadores.salida.mapper.CategoriaEntityMapper;
-import com.bootcamp_2024.ms_stock.infraestructura.adaptadores.salida.persistencia.entity.CategoriaEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Repository
 public class CategoriaRepositoryAdapter implements CategoriaRepository {
@@ -33,15 +32,12 @@ public class CategoriaRepositoryAdapter implements CategoriaRepository {
         return categoriaJpaRepository.existsByNombre(nombre);
     }
 
-    @Override
-    public Categoria save(Categoria categoria) {
-        CategoriaEntity entity = categoriaMapper.toEntity(categoria);
-        return categoriaMapper.toDomain(categoriaJpaRepository.save(entity));
-    }
 
     @Override
-    public List<Categoria> findAll(Sort sort, Pageable pageable) {
-        return categoriaJpaRepository.findAll(pageable)
+    public List<Categoria> findAll(Paginacion paginacion) {
+        PageRequest pageRequest = PageRequest.of(paginacion.getPagina(), paginacion.getTamanio(),
+                paginacion.getOrden() == Orden.ASCENDENTE ? Sort.by("nombre").ascending() : Sort.by("nombre").descending());
+        return categoriaJpaRepository.findAll(pageRequest)
                 .stream()
                 .map(categoriaMapper::toDomain)
                 .toList();

@@ -1,12 +1,10 @@
 package com.bootcamp_2024.ms_stock.aplicacion.service;
 
-
 import com.bootcamp_2024.ms_stock.aplicacion.excepciones.CategoriaNotFoundException;
 import com.bootcamp_2024.ms_stock.dominio.modelo.Categoria;
-import com.bootcamp_2024.ms_stock.infraestructura.adaptadores.salida.persistencia.repository.CategoriaRepositoryAdapter;
+import com.bootcamp_2024.ms_stock.dominio.paginacion.Paginacion;
+import com.bootcamp_2024.ms_stock.dominio.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,21 +12,18 @@ import java.util.List;
 @Service
 public class CategoriaService {
 
-    private final CategoriaRepositoryAdapter categoriaRepositoryAdapter;
+    private final CategoriaRepository categoriaRepository;
 
     @Autowired
-    public CategoriaService(CategoriaRepositoryAdapter categoriaRepositoryAdapter) {
-        this.categoriaRepositoryAdapter = categoriaRepositoryAdapter;
+    public CategoriaService(CategoriaRepository categoriaRepository) {
+        this.categoriaRepository = categoriaRepository;
     }
 
-    public List<Categoria> listarCategorias(boolean ascendente, int pagina, int tamanio) {
-        PageRequest pageRequest = PageRequest.of(pagina, tamanio, ascendente ? Sort.by("nombre").ascending() : Sort.by("nombre").descending());
-        List<Categoria> categorias = categoriaRepositoryAdapter.findAll(pageRequest.getSort(), pageRequest);
-
+    public List<Categoria> listarCategorias(Paginacion paginacion) {
+        List<Categoria> categorias = categoriaRepository.findAll(paginacion);
         if (categorias.isEmpty()) {
             throw new CategoriaNotFoundException("No se encontraron categorías");
         }
-
         return categorias;
     }
 }
