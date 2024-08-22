@@ -1,6 +1,6 @@
-package com.bootcamp_2024.ms_stock.infraestructura.persistencia.repository;
+package com.bootcamp_2024.ms_stock.infraestructura.adaptadores.salida.persistencia.repository;
 
-import com.bootcamp_2024.ms_stock.infraestructura.persistencia.entity.CategoriaEntity;
+import com.bootcamp_2024.ms_stock.infraestructura.adaptadores.salida.persistencia.entity.CategoriaEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

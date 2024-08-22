@@ -1,4 +1,4 @@
-package com.bootcamp_2024.ms_stock.security;
+package com.bootcamp_2024.ms_stock.infraestructura.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

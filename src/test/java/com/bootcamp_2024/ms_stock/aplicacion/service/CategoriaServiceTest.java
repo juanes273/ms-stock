@@ -1,21 +1,14 @@
 package com.bootcamp_2024.ms_stock.aplicacion.service;
 
 import com.bootcamp_2024.ms_stock.aplicacion.dto.CategoriaDTO;
-import com.bootcamp_2024.ms_stock.infraestructura.persistencia.entity.CategoriaEntity;
-import com.bootcamp_2024.ms_stock.infraestructura.persistencia.repository.CategoriaJpaRepository;
-import com.bootcamp_2024.ms_stock.infraestructura.mapper.CategoriaMapper;
+import com.bootcamp_2024.ms_stock.infraestructura.adaptadores.salida.persistencia.entity.CategoriaEntity;
+import com.bootcamp_2024.ms_stock.infraestructura.adaptadores.salida.persistencia.repository.CategoriaJpaRepository;
+import com.bootcamp_2024.ms_stock.infraestructura.adaptadores.salida.mapper.CategoriaMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

@@ -1,4 +1,4 @@
-package com.bootcamp_2024.ms_stock.infraestructura.persistencia.entity;
+package com.bootcamp_2024.ms_stock.infraestructura.adaptadores.salida.persistencia.entity;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
