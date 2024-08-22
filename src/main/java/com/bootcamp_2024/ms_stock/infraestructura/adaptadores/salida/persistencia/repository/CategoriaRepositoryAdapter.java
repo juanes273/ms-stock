@@ -2,7 +2,7 @@ package com.bootcamp_2024.ms_stock.infraestructura.adaptadores.salida.persistenc
 
 import com.bootcamp_2024.ms_stock.dominio.modelo.Categoria;
 import com.bootcamp_2024.ms_stock.dominio.repository.CategoriaRepository;
-import com.bootcamp_2024.ms_stock.infraestructura.adaptadores.salida.mapper.CategoriaMapper;
+import com.bootcamp_2024.ms_stock.infraestructura.adaptadores.salida.mapper.CategoriaEntityMapper;
 import com.bootcamp_2024.ms_stock.infraestructura.adaptadores.salida.persistencia.entity.CategoriaEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +21,7 @@ public class CategoriaRepositoryAdapter implements CategoriaRepository {
     private CategoriaJpaRepository categoriaJpaRepository;
 
     @Autowired
-    private CategoriaMapper categoriaMapper;
+    private CategoriaEntityMapper categoriaMapper;
 
     @Override
     public Optional<Categoria> findByNombre(String nombre) {
