@@ -34,15 +34,12 @@ public class CategoriaController {
             @RequestParam(value = "pagina", defaultValue = "0") Integer pagina,
             @RequestParam(value = "tamanio", defaultValue = "10") Integer tamanio) {
 
-        // Configura PageRequest con los valores proporcionados o los valores predeterminados
-        PageRequest pageRequest = PageRequest.of(pagina, tamanio,
-                ascendente ? Sort.by("nombre").ascending() : Sort.by("nombre").descending());
+        // Delegar la lógica al servicio
+        List<Categoria> categorias = categoriaService.listarCategorias(ascendente, pagina, tamanio);
 
-        // Obtén el contenido de la página
-        return categoriaJpaRepository.findAll(pageRequest)
-                .getContent() // Aquí obtienes la lista de CategoriaEntity
-                .stream()
-                .map(categoriaMapper::toDto) // Aquí el mapeo debería funcionar correctamente
+        // Convertir las entidades a DTOs
+        return categorias.stream()
+                .map(categoriaMapper::toDto)
                 .collect(Collectors.toList());
     }
 

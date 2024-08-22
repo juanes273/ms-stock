@@ -17,6 +17,11 @@ public interface CategoriaMapper {
     @Mapping(source = "id", target = "id")
     @Mapping(source = "nombre", target = "nombre")
     @Mapping(source = "descripcion", target = "descripcion")
+    CategoriaDTO toDto(Categoria categoria);
+
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "nombre", target = "nombre")
+    @Mapping(source = "descripcion", target = "descripcion")
     CategoriaEntity toEntity(CategoriaDTO dto);
 
     @Mapping(source = "id", target = "id")
@@ -28,4 +33,9 @@ public interface CategoriaMapper {
     @Mapping(source = "nombre", target = "nombre")
     @Mapping(source = "descripcion", target = "descripcion")
     Categoria toDomain(CategoriaEntity categoriaEntity);
+
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "nombre", target = "nombre")
+    @Mapping(source = "descripcion", target = "descripcion")
+    Categoria toDomain(CategoriaDTO categoriaDTO);
 }
