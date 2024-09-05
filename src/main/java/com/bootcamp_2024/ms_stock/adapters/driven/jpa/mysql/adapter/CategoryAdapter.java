@@ -19,11 +19,6 @@ public class CategoryAdapter implements CategoryPersistencePort {
     private final CategoryEntityMapper categoryEntityMapper;
 
     @Override
-    public void saveCategory(Category category) {
-        categoryRepository.save(categoryEntityMapper.toEntity(category));
-    }
-
-    @Override
     public Optional<CategoryEntity> findByName(String name) {
         return categoryRepository.findByName(name);
     }

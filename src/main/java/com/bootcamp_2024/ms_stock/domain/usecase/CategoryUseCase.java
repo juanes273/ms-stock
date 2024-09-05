@@ -25,35 +25,6 @@ public class CategoryUseCase implements CategoryServicePort {
     }
 
     @Override
-    public void saveCategory(Category category) {
-        validateCategory(category);
-        categoryPersistencePort.saveCategory(category);
-    }
-
-    private void validateCategory(Category category) {
-        // Validate name uniqueness
-        Optional<CategoryEntity> existingCategory = categoryPersistencePort.findByName(category.getName());
-        if (existingCategory.isPresent()) {
-            throw new CategoryAlreadyExistsException(category.getName());
-        }
-
-        // Validate name length
-        if (category.getName().length() > MAX_NAME_LENGTH) {
-            throw new CategoryNameTooLongException(MAX_NAME_LENGTH);
-        }
-
-        // Validate description presence
-        if (category.getDescription() == null || category.getDescription().isEmpty()) {
-            throw new CategoryDescriptionMissingException();
-        }
-
-        // Validate description length
-        if (category.getDescription().length() > MAX_DESCRIPTION_LENGTH) {
-            throw new CategoryDescriptionTooLongException(MAX_DESCRIPTION_LENGTH);
-        }
-    }
-
-    @Override
     public Category getCategory(String name) {
         return categoryPersistencePort.getCategory(name);
     }

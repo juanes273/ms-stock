@@ -22,11 +22,6 @@ public class CategoryRestControllerAdapter {
     private final CategoryRequestMapper categoryRequestMapper;
     private final CategoryResponseMapper categoryResponseMapper;
 
-    @PostMapping
-    public ResponseEntity<Void> addCategory(@RequestBody AddCategoryRequest request) {
-        categoryServicePort.saveCategory(categoryRequestMapper.addRequestToCategory(request));
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
 
     @GetMapping("/{name}")
     public ResponseEntity<CategoryResponse> getCategory(@PathVariable String name) {
