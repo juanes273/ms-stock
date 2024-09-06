@@ -5,6 +5,7 @@ import com.bootcamp_2024.ms_stock.adapters.driven.jpa.mysql.exception.ElementNot
 import com.bootcamp_2024.ms_stock.adapters.driven.jpa.mysql.mapper.CategoryEntityMapper;
 import com.bootcamp_2024.ms_stock.adapters.driven.jpa.mysql.repository.CategoryRepository;
 import com.bootcamp_2024.ms_stock.domain.model.Category;
+import com.bootcamp_2024.ms_stock.domain.pagination.Pagination;
 import com.bootcamp_2024.ms_stock.domain.spi.CategoryPersistencePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -31,16 +32,20 @@ public class CategoryAdapter implements CategoryPersistencePort {
     }
 
     @Override
-    public List<Category> getAllCategories(Integer page, Integer size, boolean ascending) {
-        Pageable pagination = PageRequest.of(page, size);
-        List<CategoryEntity> categories = ascending
-                ? categoryRepository.findAllByOrderByNameAsc(pagination).getContent()
-                : categoryRepository.findAllByOrderByNameDesc(pagination).getContent();
+    public List<Category> getAllCategories(Pagination pagination) {
+        Pageable pageable = PageRequest.of(pagination.getPageNumber(), pagination.getPageSize());
+
+        List<CategoryEntity> categories = pagination.isAscending()
+                ? categoryRepository.findAllByOrderByNameAsc(pageable).getContent()
+                : categoryRepository.findAllByOrderByNameDesc(pageable).getContent();
+
         if (categories.isEmpty()) {
             throw new ElementNotFoundException();
         }
+
         return categoryEntityMapper.toModelList(categories);
     }
+
 
 
 

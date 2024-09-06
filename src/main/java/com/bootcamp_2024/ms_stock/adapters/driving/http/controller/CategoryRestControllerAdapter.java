@@ -1,13 +1,12 @@
 package com.bootcamp_2024.ms_stock.adapters.driving.http.controller;
 
-import com.bootcamp_2024.ms_stock.adapters.driving.http.dto.request.AddCategoryRequest;
-import com.bootcamp_2024.ms_stock.adapters.driving.http.dto.request.UpdateCategoryRequest;
 import com.bootcamp_2024.ms_stock.adapters.driving.http.dto.response.CategoryResponse;
 import com.bootcamp_2024.ms_stock.adapters.driving.http.mapper.CategoryRequestMapper;
 import com.bootcamp_2024.ms_stock.adapters.driving.http.mapper.CategoryResponseMapper;
 import com.bootcamp_2024.ms_stock.domain.api.CategoryServicePort;
+import com.bootcamp_2024.ms_stock.domain.model.Category;
+import com.bootcamp_2024.ms_stock.domain.pagination.Pagination;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +28,15 @@ public class CategoryRestControllerAdapter {
     }
 
     @GetMapping
-    public ResponseEntity<List<CategoryResponse>> getAllCategories(@RequestParam Integer page, @RequestParam Integer size, @RequestParam Boolean asc) {
-        return ResponseEntity.ok(categoryResponseMapper.toCategoryResponseList(categoryServicePort.getAllCategories(page, size, asc)));
+    public ResponseEntity<List<CategoryResponse>> getAllCategories(
+            @RequestParam Integer pageNumber,
+            @RequestParam Integer pageSize,
+            @RequestParam Boolean ascending) {
+
+        Pagination pagination = new Pagination(pageNumber, pageSize, ascending);
+        List<Category> categories = categoryServicePort.getAllCategories(pagination);
+        List<CategoryResponse> categoryResponses = categoryResponseMapper.toCategoryResponseList(categories);
+
+        return ResponseEntity.ok(categoryResponses);
     }
 }

@@ -7,6 +7,7 @@ import com.bootcamp_2024.ms_stock.domain.exception.CategoryDescriptionMissingExc
 import com.bootcamp_2024.ms_stock.domain.exception.CategoryDescriptionTooLongException;
 import com.bootcamp_2024.ms_stock.domain.exception.CategoryNameTooLongException;
 import com.bootcamp_2024.ms_stock.domain.model.Category;
+import com.bootcamp_2024.ms_stock.domain.pagination.Pagination;
 import com.bootcamp_2024.ms_stock.domain.spi.CategoryPersistencePort;
 import static com.bootcamp_2024.ms_stock.domain.utils.DomainVariables.MAX_DESCRIPTION_LENGTH;
 import static com.bootcamp_2024.ms_stock.domain.utils.DomainVariables.MAX_NAME_LENGTH;
@@ -30,8 +31,8 @@ public class CategoryUseCase implements CategoryServicePort {
     }
 
     @Override
-    public List<Category> getAllCategories(Integer page, Integer size, boolean ascending) {
-        return categoryPersistencePort.getAllCategories(page, size, ascending);
+    public List<Category> getAllCategories(Pagination pagination) {
+        return categoryPersistencePort.getAllCategories(pagination);
     }
 
 }
